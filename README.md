@@ -8,10 +8,11 @@
 
 辅助麦课安全网课学习
 
-![GitHub release](https://img.shields.io/github/release/WeiYuanStudio/AutoWeiBan.svg?style=flat-square)
-![GitHub last commit](https://img.shields.io/github/last-commit/WeiYuanStudio/AutoWeiBan.svg?style=flat-square)
 
 </div>
+
+## 2020.8.5更新
+麦课网已经更新，本次更改调整了接口，以便正常使用
 
 ## 2019.10.14紧急修复
 **版本92898ced**已经修复了登录问题
