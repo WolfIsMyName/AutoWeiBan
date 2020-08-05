@@ -24,12 +24,17 @@ getRandImageURL = 'https://weiban.mycourse.cn/pharos/login/randImage.do'  # 验�
 
 doStudyURL = 'https://weiban.mycourse.cn/pharos/usercourse/study.do'  # 学习课程URL
 
-genQRCodeURL = 'https://weiban.mycourse.cn/pharos/login/genBarCodeImageAndCacheUuid.do'  # 获取验证码以及验证码ID URL
+# 获取验证码以及验证码ID URL
+genQRCodeURL = 'https://weiban.mycourse.cn/pharos/login/genBarCodeImageAndCacheUuid.do'
 
-loginStatusURL = 'https://weiban.mycourse.cn/pharos/login/barCodeWebAutoLogin.do'  # 用于二维码登录刷新登录状态
+# 用于二维码登录刷新登录状态
+loginStatusURL = 'https://weiban.mycourse.cn/pharos/login/barCodeWebAutoLogin.do'
 
+getListCategoryURL = "https://weiban.mycourse.cn/pharos/usercourse/listCategory.do"  # 获取章节
 
 # 获取一个新Cookie
+
+
 def getCookie():
     cookie = http.cookiejar.CookieJar()
     handler = request.HTTPCookieProcessor(cookie)
@@ -98,12 +103,15 @@ def getProgress(userProjectId, tenantCode, cookie):
 
 
 # 获取课程列表
-def getListCourse(userProjectId, chooseType, tenantCode, name, cookie):
+def getListCourse(userProjectId, chooseType, categoryCode, name, userId, tenantCode, token):
     param = {
         'userProjectId': userProjectId,
         'chooseType': chooseType,
+        'categoryCode': categoryCode,
+        'name': name,
+        'userId': userId,
         'tenantCode': tenantCode,
-        'name': name
+        'token': token
     }
     data = bytes(parse.urlencode(param), encoding='utf-8')
     req = request.Request(url=getListCourseURL, data=data, method='POST')
@@ -112,8 +120,25 @@ def getListCourse(userProjectId, chooseType, tenantCode, name, cookie):
     responseJSON = json.loads(responseText)
     return responseJSON
 
+#获取章节
+def getListCategory(userProjectId, chooseType, tenantCode, userId, token):
+    param = {
+        'userProjectId': userProjectId,
+        'chooseType': chooseType,
+        'userId': userId,
+        'tenantCode': tenantCode,
+        'token': token
+    }
+    data = bytes(parse.urlencode(param), encoding='utf-8')
+    req = request.Request(url=getListCategoryURL, data=data, method='POST')
+    responseStream = request.urlopen(req)
+    responseText = responseStream.read().decode('utf-8')
+    responseJSON = json.loads(responseText)
+    return responseJSON
 
 # 完成课程请求
+
+
 def finishCourse(userCourseId, tenantCode, cookie):
     param = {
         'userCourseId': userCourseId,
